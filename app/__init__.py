@@ -17,6 +17,8 @@ s3 = boto3.resource('s3',
                     aws_access_key_id=app.config['AWS_ACCESS_KEY_ID'],
                     aws_secret_access_key=app.config['AWS_SECRET_ACCESS_KEY'])
 
+client = boto3.client('lambda')
+
 flask_s3 = FlaskS3(app)
 bcrypt = Bcrypt(app)
 flask_s3.init_app(app)
@@ -30,8 +32,22 @@ def welcome():
 
 
 # Route for the home page
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        code = request.form['code']
+
+        s3.Object("test-yuanyi",'test.py').put(Body=code);
+       
+        response = client.invoke(
+        ClientContext='MyApp', 
+        FunctionName='run_python',
+        InvocationType='Event',
+        LogType='Tail',
+        Payload='{"url":"https://s3.amazonaws.com/test-yuanyi/test.py"}',
+        )
+        
+        print(response['Payload'].read())
     return render_template('home.html')
 
 
