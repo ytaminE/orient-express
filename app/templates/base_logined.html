@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}
+    <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/base.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <title>{% block title %}{% endblock %}-Orient Express</title>
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a href="{{ url_for('welcome') }}" class="navbar-brand">Orient Express</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li style="display: none;"><a href="#">About</a></li>
+            <li style="display: none"><a href="#">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </div>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer class="nav-footer">
+      <div class="container">
+        <p>© 2017<a style="color:#0a93a6; text-decoration:none;" href="#">Orient Express</a></p>
+      </div>
+    </footer>  
+</body>
+</html>
