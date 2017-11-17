@@ -16,3 +16,8 @@ zappa deploy
 ```
 zappa update
 ```
+## How to update static files in S3?
+```
+python upload_s3.py
+```
+After uploading successfully, please change the metadata of the "css" folder in s3 and write content-type as "text/css".

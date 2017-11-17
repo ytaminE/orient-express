@@ -4,12 +4,10 @@
 <div class="container">
   <h1>Please Register</h1>
   <br>
-  <form action="{{ url_for('register_submit') }}" method="post">
-    Username: <input type="text" placeholder="Username" name="username" value="{{
-    request.form.username }}">
-    Password: <input type="password" placeholder="Password" name="password" value="{{
-    request.form.password }}">
-    Email: <input type="email" placeholder="Email" name="email" value="{{request.form.email}}">
+  <form id = "registrationForm">
+    Email: <input type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
+    Password: <input type="password" id = "passwordInputRegister" placeholder="Password" pattern=".*" required="" >
+    Confirm Password: <input type="password" id = "password2InputRegister" placeholder="Confirm Password" pattern=".*" required="">
     <input class="btn btn-default" type="submit" value="Sign up">
   </form>
   {% if error %}

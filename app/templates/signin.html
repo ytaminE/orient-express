@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Please login</h1>
+  <br>
+  <form id = "signinForm">
+    Email: <input type="email" id = "emailInputSignin" placeholder="Email" name="username" value="{{request.form.username }}" required>
+    Password: <input type="password" id = "passwordInputSignin" placeholder="Password" pattern=".*" name="password" value="{{
+    request.form.password }}">
+    <input class="btn btn-default" type="submit" value="Sign in">
+  </form>
+  {% if error %}
+  <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+</div>
+{% endblock %}

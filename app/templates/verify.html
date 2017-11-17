@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Verify Email</h1>
+  <br>
+  <form id = "verifyForm">
+    Email: <input type="email" id="emailInputVerify" placeholder="Email" required>
+    Verification Code: <input type="text" id = "codeInputVerify" placeholder="Verification Code" pattern=".*" required>
+    <input class="btn btn-default" type="submit" value="Verify">
+  </form>
+  {% if error %}
+  <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ import boto3
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_s3 import FlaskS3
-from flask import render_template, redirect, url_for, request
+from flask import render_template
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -31,60 +31,28 @@ def welcome():
     return render_template('welcome.html')
 
 
-# Route for the home page
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        code = request.form['code']
-
-        s3.Object("test-yuanyi",'test.py').put(Body=code);
-       
-        response = client.invoke(
-        ClientContext='MyApp', 
-        FunctionName='run_python',
-        InvocationType='Event',
-        LogType='Tail',
-        Payload='{"url":"https://s3.amazonaws.com/test-yuanyi/test.py"}',
-        )
-        
-        print(response['Payload'].read())
-    return render_template('home.html')
+# Route for the signin page
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
 
 
-# Route for register page
+# Route for the register page
 @app.route('/register')
 def register():
     return render_template('register.html')
 
 
-# Route for register submit
-@app.route('/register_submit', methods=['GET', 'POST'])
-def register_submit():
-    return redirect(url_for('login'))
+# Route for the verify page
+@app.route('/verify')
+def verify():
+    return render_template('verify.html')
 
 
-# Route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        # user = User.query.filter_by(userID=username).first()
-        # if user is not None and user.is_correct_password(password):
-        if username == "test" and password == "test":
-            # login_user(user)
-            return redirect(url_for('home'))
-    # else:
-    #         error = 'Username or password is incorrect. Please try again.'
-
-    return render_template('login.html', error=error)
-
-
-# Route for logout
-@app.route('/logout')
-def logout():
-    return render_template('welcome.html')
+# Route for the home page
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 
 if __name__ == '__main__':

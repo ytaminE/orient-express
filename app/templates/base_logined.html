@@ -9,6 +9,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/aws-cognito-sdk.min.js"></script>
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/amazon-cognito-identity.min.js"></script>
+    <script src="https://js.arcgis.com/4.3/"></script>
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/config.js"></script>
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/cognito-auth.js"></script>
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/code.js"></script>
+
+
     <title>{% block title %}{% endblock %}-Orient Express</title>
     {% endblock %}
 </head>
@@ -17,7 +25,7 @@
     <div class="container">
 
         <div class="navbar-header">
-            <a href="{{ url_for('welcome') }}" class="navbar-brand">Orient Express</a>
+            <a href="{{ url_for('home') }}" class="navbar-brand">Orient Express</a>
         </div>
         <ul class="nav navbar-nav">
             <li style="display: none;"><a href="#">About</a></li>
@@ -25,7 +33,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li id = "signOut"><a href="{{ url_for('signin') }}">Sign out</a></li>
         </ul>
     </div>
     </nav>
@@ -34,6 +42,6 @@
       <div class="container">
         <p>© 2017<a style="color:#0a93a6; text-decoration:none;" href="#">Orient Express</a></p>
       </div>
-    </footer>  
+    </footer>
 </body>
 </html>
