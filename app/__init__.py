@@ -3,7 +3,8 @@ import boto3
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_s3 import FlaskS3
-from flask import render_template
+from flask import render_template, request
+from werkzeug.utils import redirect
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -49,8 +50,26 @@ def verify():
     return render_template('verify.html')
 
 
+@app.route('/verify_success')
+def verify_success():
+    email = request.args.get('email')
+    print(email)
+    # TODO: Create a new item for this user
+
+    return render_template('signin.html')
+
+
+@app.route('/submit_code', methods=['GET', 'POST'])
+def submit_code():
+    if request.method == 'POST':
+        username = request.form['username']
+        print(username)
+    # TODO: Submit code
+    return redirect('home')
+
+
 # Route for the home page
-@app.route('/home')
+@app.route('/home', methods=['GET','POST'])
 def home():
     return render_template('home.html')
 

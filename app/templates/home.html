@@ -15,10 +15,12 @@
 Orient Express</h1>
     <p>A bunch of code challenges</p>
   </div>
-   <form action="" method="post">
+	<form action="{{ url_for('submit_code') }}" method="post">
         <textarea name="code" id="code" rows="20" cols="50"></textarea>
+        <input id="codename" type="hidden" name="codename" value="null">
+        <input id="username" type="hidden" name="username" value="null">
         <input id="submit" type="submit" value="code" />
-    </form>
+   </form>
 </div>
 
 <!-- <div id="authTokenModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="authToken">

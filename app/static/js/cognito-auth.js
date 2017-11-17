@@ -43,6 +43,8 @@ var WildRydes = window.WildRydes || {};
                     resolve(session.getIdToken().getJwtToken());
                 }
             });
+            var email = userPool.getCurrentUser().getUsername();
+            $('#username').val(email);
         } else {
             resolve(null);
         }
@@ -88,6 +90,7 @@ var WildRydes = window.WildRydes || {};
         createCognitoUser(email).confirmRegistration(code, true, function confirmCallback(err, result) {
             if (!err) {
                 onSuccess(result);
+                window.location.href = "verify_success?email=" + toUsername(email);
             } else {
                 onFailure(err);
             }
@@ -114,7 +117,6 @@ var WildRydes = window.WildRydes || {};
         $('#registrationForm').submit(handleRegister);
         $('#verifyForm').submit(handleVerify);
         $('#signOut').click(signOut);
-
     });
 
     function signOut(event) {
