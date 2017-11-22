@@ -20,7 +20,7 @@
             <th scope="row">{{ loop.index }}</th>
             <td>
                 <div>
-                    <a href="{{"/dev/problems/solution?name="+item['question_name']}}">{{ item['question_name'] }}</a>
+                    <a href="{{url_for('problem', question_name = item['question_name'])}}">{{ item['question_name'] }}</a>
                 </div>
             </td>
             <td id = "submissionCount">{{ item['total_submission'] }}</td>

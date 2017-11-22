@@ -1,0 +1,36 @@
+{% extends "base_logined.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container" id="home" style="display:none">
+    <div class="jumbotron">
+    {% if description %}
+    {{description|safe}}
+    {% endif %}
+    </div>
+    
+    <form action="{{ url_for('submit_code') }}" method="post">
+        <div class="select">
+            <select name = "lang">
+                <option>language</option>
+                <option id="python" name="python">python</option>
+                <option id="java" name="java">java</option>
+                <option id="ruby" name="ruby">ruby</option>
+                <option id="javascript" name="javascript">javascript</option>
+            </select>
+        </div>
+        <textarea name="code" id="code" rows="20" cols="100"></textarea>
+        <input id="codename" type="hidden" name="codename" value="{{request.args.get('name')}}">
+        <input id="username" type="hidden" name="username" value="null">
+        <div>
+        <input id="submit" type="submit" value="code" />
+        </div>
+    </form>
+    
+    <div id="result">
+       <p><strong>result:</strong></p>
+       {% if result %}
+        {{ result|safe }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
