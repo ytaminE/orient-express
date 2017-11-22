@@ -1,0 +1,39 @@
+{% extends "base_logined.html" %}
+{% block title %}Problems{% endblock %}
+{% block content %}
+
+<div class="container">
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Question</th>
+            <th scope='col'>Submission#</th>
+            <!-- <th scope="col">Last Name</th> -->
+            <!-- <th scope="col">Username</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% if list %}
+        {% for item in list %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>
+                <div>
+                    <a href="{{"/dev/problems/solution?name="+item['question_name']}}">{{ item['question_name'] }}</a>
+                </div>
+            </td>
+            <td id = "submissionCount">{{ item['total_submission'] }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+       
+    </tbody>
+    </table>
+</div>
+
+
+
+
+
+{% endblock %}
