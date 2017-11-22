@@ -1,17 +1,33 @@
 {% extends "base.html" %}
+{% block signin %}
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/signin.css">
+{% endblock %}
 {% block title %}Register{% endblock %}
 {% block content %}
+
+
 <div class="container">
-  <h1>Please Register</h1>
-  <br>
-  <form id = "registrationForm">
-    Email: <input type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
-    Password: <input type="password" id = "passwordInputRegister" placeholder="Password" pattern=".*" required="" >
-    Confirm Password: <input type="password" id = "password2InputRegister" placeholder="Confirm Password" pattern=".*" required="">
-    <input class="btn btn-default" type="submit" value="Sign up">
-  </form>
-  {% if error %}
-  <p class="error"><strong>Error:</strong> {{ error }}
-    {% endif %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+         
+            <div class="account-wall">
+                  <h3 class="text-center">Sign Up to Orient Express</h3>
+                        <img class="profile-img" src="http://img1.3lian.com/2016/gif/w/15/65.jpg"
+                    alt="">
+                       <form id = "registrationForm" class="form-signin">
+                        <input type="email"  class="form-control" id="emailInputRegister" placeholder="Email" pattern=".*" required>
+                        <input type="password"  class="form-control" id = "passwordInputRegister" placeholder="Password" pattern=".*" required="" >
+                        <input type="password"  class="form-control" id = "password2InputRegister" placeholder="Confirm Password" pattern=".*" required="">
+                        <input class="btn btn-lg btn-default btn-block" type="submit" value="Sign up">
+                        </form>
+                        <div id="tabs" data-tabs="tabs">
+                            <p class="text-center"><a href="{{ url_for('signin') }}">Already have an Account?</a></p>
+                            <!-- <p class="text-center"><a href="#select" data-toggle="tab">Select Account</a></p> -->
+                        </div>
+                      
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}
