@@ -1,11 +1,9 @@
 import boto3
 import datetime
-import time
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_s3 import FlaskS3
 from flask import render_template, request, url_for
-from werkzeug.utils import redirect
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -66,104 +64,107 @@ def verify_success():
 
     return render_template('signin.html')
 
+# @app.route('/_add_numbers')
+# def add_numbers():
+#     a = request.args.get('a', 0, type=int)
+#     b = request.args.get('b', 0, type=int)
+#     return jsonify(result=a + b)
 
-@app.route('/problems/submit_code', methods=['GET', 'POST'])
-def submit_code():
-    s3_url = ""
-    if request.method == 'POST':
-        username = request.form['username']
-        lang = request.form['lang']
-        code = request.form['code']
-        questionName = request.form['codename']
-        print(questionName)
+@app.route('/run_code')
+def run_code():
+    username = request.args.get('username', 0, type=str)
+    lang = request.args.get('lang', 0, type=str)
+    questionName = request.args.get('codename', 0, type=str)
+    code = request.args.get('code', 0, type = str)
 
-        # TODO: Submit code
-        timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-        if lang == "python":
-            s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".py"
-            s3.Object("test-yuanyi", s3_url).put(Body=code);
+    print(code)
 
-            response = lambda_client.invoke(
-                FunctionName='run_python',
-                InvocationType='RequestResponse',
-                LogType='Tail',
-                Payload='{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
-                # Payload='{"url": "https://s3.amazonaws.com/test-yuanyi/javatest.java","name": "javatest"}'
-            )
-            print(
-                '{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+    if lang == "python":
+        s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".py"
+        s3.Object("test-yuanyi", s3_url).put(Body=code)
 
-        elif lang == "java":
-            s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".java"
-            s3.Object("test-yuanyi", s3_url).put(Body=code);
-
-            response = lambda_client.invoke(
-                FunctionName='run_java',
-                InvocationType='RequestResponse',
-                LogType='Tail',
-                # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
-                Payload='{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
-            )
-            print('{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
-
-        elif lang == "ruby":
-            s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".rb"
-            s3.Object("test-yuanyi", s3_url).put(Body=code);
-
-            response = lambda_client.invoke(
-                FunctionName='run_ruby',
-                InvocationType='RequestResponse',
-                LogType='Tail',
-                # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
-                Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
-            )
-            print('{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
-
-        elif lang == "javascript":
-            s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".js"
-            s3.Object("test-yuanyi", s3_url).put(Body=code);
-
-            response = lambda_client.invoke(
-                FunctionName='run_javascript',
-                InvocationType='RequestResponse',
-                LogType='Tail',
-                # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
-                Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
-            )
-            print(
-                '{"input": "[3,4]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
-
-        result = response['Payload'].read().decode('ascii')
-
-        # record info
-        table = dynamodb.Table('user_question')
-        table.put_item(
-            Item={
-                'username': username,
-                'question_name': questionName,
-                'code_s3_url': "https://s3.amazonaws.com/test-yuanyi/" + s3_url,
-                'post_date_time': timestamp
-            }
+        response = lambda_client.invoke(
+            FunctionName='run_python',
+            InvocationType='RequestResponse',
+            LogType='Tail',
+            Payload='{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+            # Payload='{"url": "https://s3.amazonaws.com/test-yuanyi/javatest.java","name": "javatest"}'
         )
+        print(
+            '{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
 
-        # submission# +1
-        table = dynamodb.Table('question')
-        response = table.get_item(
-            Key={
-                'question_name': questionName
-            })
-        count = response['Item']['total_submission']
-        table.update_item(
-            Key={
-                'question_name': questionName,
-            },
-            UpdateExpression='SET total_submission = total_submission + :val',
-            ExpressionAttributeValues={
-                ':val': 1
-            }
+    elif lang == "java":
+        s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".java"
+        s3.Object("test-yuanyi", s3_url).put(Body=code)
+
+        response = lambda_client.invoke(
+            FunctionName='run_java',
+            InvocationType='RequestResponse',
+            LogType='Tail',
+            # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
+            Payload='{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
         )
+        print('{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
 
-    return render_template('home.html', result=result)
+    elif lang == "ruby":
+        s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".rb"
+        s3.Object("test-yuanyi", s3_url).put(Body=code)
+
+        response = lambda_client.invoke(
+            FunctionName='run_ruby',
+            InvocationType='RequestResponse',
+            LogType='Tail',
+            # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
+            Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+        )
+        print('{"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+
+    elif lang == "javascript":
+        s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".js"
+        s3.Object("test-yuanyi", s3_url).put(Body=code)
+
+        response = lambda_client.invoke(
+            FunctionName='run_javascript',
+            InvocationType='RequestResponse',
+            LogType='Tail',
+            # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
+            Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+        )
+        print(
+            '{"input": "[3,4]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+
+    result = response['Payload'].read().decode('ascii')
+
+    # record info
+    table = dynamodb.Table('user_question')
+    table.put_item(
+        Item={
+            'username': username,
+            'question_name': questionName,
+            'code_s3_url': "https://s3.amazonaws.com/test-yuanyi/" + s3_url,
+            'post_date_time': timestamp
+        }
+    )
+
+    # submission# +1
+    table = dynamodb.Table('question')
+    response = table.get_item(
+        Key={
+            'question_name': questionName
+        })
+    count = response['Item']['total_submission']
+    table.update_item(
+        Key={
+            'question_name': questionName,
+        },
+        UpdateExpression='SET total_submission = total_submission + :val',
+        ExpressionAttributeValues={
+            ':val': 1
+        }
+    )
+
+    return jsonify(result=result)
 
 
 # Route for the home page
