@@ -18,12 +18,16 @@
                 <option id="javascript" name="javascript">javascript</option>
             </select>
         </div>
+        
         <textarea name="code" id="code" rows="20" cols="100"></textarea>
-        <input id="codename" type="hidden" name="codename" value="{{request.args.get('name')}}">
+        
+        <input id="codename" type="hidden" name="codename" value="{{question_name}}">
         <input id="username" type="hidden" name="username" value="null">
+        
         <div>
-        <input id="submit" type="submit" value="code" />
+            <input id="submit" type="submit" value="code" />
         </div>
+    
     </form>
     
     <div id="result">

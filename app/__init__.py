@@ -190,7 +190,7 @@ def problem(question_name):
         })
     description = response['Item']['question_content']
 
-    return render_template('problem.html', description=description)
+    return render_template('problem.html', description=description, question_name = question_name)
 
 
 if __name__ == '__main__':
