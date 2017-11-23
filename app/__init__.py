@@ -77,8 +77,6 @@ def run_code():
     questionName = request.args.get('codename', 0, type=str)
     code = request.args.get('code', 0, type = str)
 
-    print(code)
-
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
     if lang == "python":
         s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".py"

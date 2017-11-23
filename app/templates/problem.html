@@ -22,20 +22,27 @@
             </select>
         </div>
         <br>
+        <p>Code</p>
         <textarea class="form-control" name="code" id="code" rows="20" cols="100"></textarea>
         <br>
+        <p>Input</p>
+        <textarea class="form-control" name="input" id="input" rows="5" cols="100"></textarea>
+
+        <br>
         <div>
-            <a href=# id=submit><button class='btn btn-default'>Run</button></a>
+            <a href=# id=submit><button class='btn btn-primary'>Run Code</button></a>
         </div>
 
     </form>
-
-    <div id="result">
-       <p><strong>result:</strong></p>
-       {% if result %}
-        {{ result|safe }}
-        {% endif %}
+    <br>
+    <div>
+        <p>Result:</p>
+        <textarea readonly class="form-control" name="input" id="result" rows="3" cols="100"></textarea>
     </div>
+
+    <br>
+    <br>
+    <br>
 
 </div>
 
@@ -63,7 +70,7 @@
         // a: $('input[name="a"]').val(),
         // b: $('input[name="b"]').val()
       }, function(data) {
-        $("#result").text(data.result);
+        $("#result").val(data.result);
       });
       return false;
     });
