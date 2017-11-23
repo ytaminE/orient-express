@@ -64,6 +64,7 @@ def verify_success():
 
     return render_template('signin.html')
 
+
 # @app.route('/_add_numbers')
 # def add_numbers():
 #     a = request.args.get('a', 0, type=int)
@@ -75,8 +76,11 @@ def run_code():
     username = request.args.get('username', 0, type=str)
     lang = request.args.get('lang', 0, type=str)
     questionName = request.args.get('codename', 0, type=str)
-    code = request.args.get('code', 0, type = str)
-
+    code = request.args.get('code', 0, type=str)
+    print(username)
+    print(lang)
+    print(questionName)
+    print(code)
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
     if lang == "python":
         s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".py"
@@ -189,7 +193,7 @@ def problem(question_name):
         })
     description = response['Item']['question_content']
 
-    return render_template('problem.html', description=description, question_name = question_name)
+    return render_template('problem.html', description=description, question_name=question_name)
 
 
 if __name__ == '__main__':

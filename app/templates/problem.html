@@ -52,13 +52,11 @@
 
 </div>
 
-<!-- <h1>jQuery Example</h1>
-<p><input type=text size=5 name=a> +
-   <input type=text size=5 name=b> =
-   <span id=result>?</span>
-<p><a href=# id=calculate>calculate server side</a>
-<h1>END</h1> -->
-<script type="text/javascript">
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<script type=text/javascript>
     var textArea = document.getElementById('code');
     var editor = CodeMirror.fromTextArea(textArea,{
         lineWrapping:true,
@@ -68,34 +66,21 @@
         mode: "javascript"
     });
     editor.getDoc().setValue('\n\n\n\n\n\n\n\n\n\n\n\n');
-    // var myCodeMirror = CodeMirror(document.getElementById("code"), {
-        // value: "function myScript(){return 100;}\n",
-        // mode:  "python"
-    // });
-</script>
-
-<script type=text/javascript>
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-
-<script type=text/javascript>
-  $(function() {
-    $('a#submit').on('click', function(e) {
-    // $('#run_form').on('sbumit', function(e) {
-      e.preventDefault();  //prevent form from submitting
-      $.getJSON($SCRIPT_ROOT + '/run_code', {
-        username: $('input[name="username"]').val(),
-        codename: $('input[name="codename"]').val(),
-        lang: $('select[name="lang"]').val(),
-        code: $('textarea[name="code"]').val(),
-        // a: $('input[name="a"]').val(),
-        // b: $('input[name="b"]').val()
-      }, function(data) {
-        $("#result").val(data.result);
-      });
-      return false;
+    $(function() {
+        $('a#submit').on('click', function(e) {
+            e.preventDefault();
+            $.getJSON($SCRIPT_ROOT + '/run_code', {
+            username: $('input[name="username"]').val(),
+            codename: $('input[name="codename"]').val(),
+            lang: $('select[name="lang"]').val(),
+            // code: $('textarea[name="code"]').val()
+            code: editor.getValue()            
+            }, function(data) {
+                $("#result").val(data.result);
+            });
+            return false;
+        });
     });
-  });
 </script>
 
 {% endblock %}
