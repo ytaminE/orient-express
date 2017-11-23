@@ -65,23 +65,22 @@ def verify_success():
     return render_template('signin.html')
 
 
-# @app.route('/_add_numbers')
-# def add_numbers():
-#     a = request.args.get('a', 0, type=int)
-#     b = request.args.get('b', 0, type=int)
-#     return jsonify(result=a + b)
-
 @app.route('/run_code')
 def run_code():
     username = request.args.get('username', 0, type=str)
     lang = request.args.get('lang', 0, type=str)
     questionName = request.args.get('codename', 0, type=str)
     code = request.args.get('code', 0, type=str)
-    print(username)
-    print(lang)
-    print(questionName)
-    print(code)
+    input = request.args.get('input', 0, type=str)
+
+    print("username:" + username)
+    print("language:" + lang)
+    print("question name:" + questionName)
+    print("input:" + str(input))
+    print("code:" + code)
+
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+
     if lang == "python":
         s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".py"
         s3.Object("test-yuanyi", s3_url).put(Body=code)
@@ -90,11 +89,12 @@ def run_code():
             FunctionName='run_python',
             InvocationType='RequestResponse',
             LogType='Tail',
-            Payload='{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+            Payload='{"name":"' + questionName + '","input":' + '\"' + str(
+                input) + '\"' + ',"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
             # Payload='{"url": "https://s3.amazonaws.com/test-yuanyi/javatest.java","name": "javatest"}'
         )
-        print(
-            '{"name":"' + questionName + '","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+        print('{"name":"' + questionName + '","input":' + '\"' + str(
+            input) + '\"' + ',"url":"https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
 
     elif lang == "java":
         s3_url = lang + "/" + username + "/" + questionName + "/" + timestamp + "/" + questionName + ".java"
@@ -135,6 +135,8 @@ def run_code():
         )
         print(
             '{"input": "[3,4]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+    else:
+        return "Please select a correct programming language"
 
     result = response['Payload'].read().decode('ascii')
 
