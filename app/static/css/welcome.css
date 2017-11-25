@@ -1,0 +1,15 @@
+.saying:after {  
+  content: "|";  
+  font-family: Arial, sans-serif;  
+  font-size: 1em;  
+  line-height:1;  
+  display: inline-block;  
+  vertical-align: baseline;  
+  
+  animation: caret 500ms infinite;  
+} 
+pre{
+    background-color: white;
+    border: none;
+    font-size: 3em;
+} 

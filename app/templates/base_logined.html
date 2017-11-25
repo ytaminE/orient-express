@@ -13,6 +13,44 @@
 
     <title>{% block title %}{% endblock %}-Orient Express</title>
     {% endblock %}
+
+    <style>
+   .navbar-inverse{
+    background-color: white;
+    border-color:white;
+    border-bottom: solid 1px black;
+    margin-top:15px;
+    
+    }
+    .navbar-brand{
+        border-top: solid 1px black;
+        border-left: solid 1px black;
+        border-right: solid 1px black;
+        border-top-left-radius: 1em ;
+        border-top-right-radius: 1em;
+    }
+    .navbar-inverse .navbar-brand{
+        color:black;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:black;
+    }
+   .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover{
+        color:gray;
+    }
+    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover{
+        color:gray;
+    }
+    .col-lg-6{
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+    .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group{
+        background-color: black;
+        color:white;
+    }
+    
+</style>
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -26,7 +64,7 @@
             <li style="display: none"><a href="#">Contact</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a id="test" href="{{ url_for('home') }}">Home</a></li>
             <li id = "signOut"><a href="{{ url_for('signin') }}">Sign out</a></li>
         </ul>
     </div>
@@ -34,16 +72,22 @@
     {% block content %}{% endblock %}
     <footer class="nav-footer">
       <div class="container">
-        <p>© 2017<a style="color:#0a93a6; text-decoration:none;" href="#">Orient Express</a></p>
+        <p>© 2017<a style="color:white; text-decoration:none;" href="#">Orient Express</a></p>
       </div>
     </footer>
-        <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/aws-cognito-sdk.min.js"></script>
+
+
+
+
+
+    <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/aws-cognito-sdk.min.js"></script>
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/amazon-cognito-identity.min.js"></script>
     <script src="https://js.arcgis.com/4.3/"></script>
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/config.js"></script>
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/cognito-auth.js"></script>
 <!--     <script src="/static/js/cognito-auth.js"></script> -->
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/code.js"></script>
+          
 
 </body>
 </html>

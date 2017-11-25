@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Welcome{% endblock %}
+{% block welcome %}
+<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/welcome.css">
+{% endblock %}
+ 
+ {% block welcomejs %}
+ <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/welcome.js"></script>
+ {% endblock %}
+
+
+
 {% block content %}
-    <div class="container">
-        <h1>Welcome to the <span><strong>Orient Express</strong></span></h1>
-    </div>
+
+<div class="container">
+  <pre id="aa" class="saying"></pre>  
+<div style="display:none" id="w">
+# Welcome To Orient Express.
+
+# Ready to Start Your Challenge? 
+
+# ......^-^
+
+</div>
+</div>
+
 {% endblock %}

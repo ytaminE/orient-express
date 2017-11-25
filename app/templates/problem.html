@@ -36,7 +36,9 @@
 
         <br>
         <div>
-            <a href=# id=submit><button class='btn btn-primary'>Run Code</button></a>
+            <a href=# id=submit><button style="background-color:black; margin-right:10px" class='btn btn-primary'>Run Code</button></a>
+        
+            <img id="loading" style="display:none" height="40px" src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/img/loader.gif" alt="loading">
         </div>
 
     </form>
@@ -68,6 +70,7 @@
     editor.getDoc().setValue('\n\n\n\n\n\n\n\n\n\n\n\n');
     $(function() {
         $('a#submit').on('click', function(e) {
+            document.getElementById('loading').style.display='';
             e.preventDefault();
             $.getJSON($SCRIPT_ROOT + '/run_code', {
             username: $('input[name="username"]').val(),
@@ -78,6 +81,7 @@
             code: editor.getValue()            
             }, function(data) {
                 $("#result").val(data.result);
+                if($("#result").val()!="") document.getElementById('loading').style.display='none';
             });
             return false;
         });

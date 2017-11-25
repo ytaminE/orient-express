@@ -5,18 +5,54 @@
     <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/css/base.css">
     {% block signin %}{% endblock %}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
+    {% block welcome %}{% endblock %}
+     <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {% block welcomejs %}{% endblock %}
     <title>{% block title %}{% endblock %}-Orient Express</title>
     {% endblock %}
+
+   <style>
+   .navbar-inverse{
+    background-color: white;
+    border-color:white;
+    border-bottom: solid 1px black;
+    margin-top:15px;
+    
+    }
+    .navbar-brand{
+        border-top: solid 1px black;
+        border-left: solid 1px black;
+        border-right: solid 1px black;
+        border-top-left-radius: 1em ;
+        border-top-right-radius: 1em;
+    }
+    .navbar-inverse .navbar-brand{
+        color:black;
+    }
+    .navbar-inverse .navbar-nav>li>a{
+        color:black;
+    }
+   .navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover{
+        color:gray;
+    }
+    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover{
+        color:gray;
+    }
+    
+</style>
+   
 </head>
 <body>
     <nav class="navbar navbar-inverse">
     <div class="container">
+ 
 
         <div class="navbar-header">
+            
+            <img height="50px" src="http://78.media.tumblr.com/613837f6b679277b4d7ef5cee5427c27/tumblr_mla8v0CgVj1qgwp67o1_400.gif">
             <a href="{{ url_for('welcome') }}" class="navbar-brand">Orient Express</a>
+           
         </div>
         <ul class="nav navbar-nav">
             <li style="display:none;"><a href="#">About</a></li>
@@ -28,10 +64,12 @@
         </ul>
     </div>
     </nav>
+
+
     {% block content %}{% endblock %}
     <footer class="nav-footer">
       <div class="container">
-        <p>© 2017<a style="color:#0a93a6; text-decoration:none;" href="#">Orient Express</a></p>
+        <p>© 2017<a style="color:white; text-decoration:none;" href="#">Orient Express</a></p>
       </div>
     </footer>  
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/lib/aws-cognito-sdk.min.js"></script>

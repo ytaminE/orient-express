@@ -1,4 +1,5 @@
 import boto3
+from boto3.dynamodb.conditions import Attr
 import datetime
 
 from flask import Flask, jsonify
@@ -175,6 +176,7 @@ def run_code():
 # Route for the home page
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    
     return render_template('home.html')
 
 
@@ -182,6 +184,13 @@ def home():
 def problems():
     table = dynamodb.Table('question')
     response = table.scan()
+
+    if request.method=="POST":
+        search_content = request.form['search']
+        response = table.scan(
+            FilterExpression=Attr('question_name').contains(search_content)
+        )
+    
 
     return render_template('problems.html', list=response['Items'])
 
