@@ -17,7 +17,7 @@
         <input id="username" type="hidden" name="username" value="null">
 
         <div class = "select">
-            <select name = "lang" class="form-control">
+            <select name = "lang" class="form-control" onchange="changeText(this.options[this.options.selectedIndex].value);">
                 <option>language</option>
                 <option id="python" name="python">python</option>
                 <option id="java" name="java">java</option>
@@ -60,6 +60,8 @@
 
 <script type=text/javascript>
     var textArea = document.getElementById('code');
+    var lang = document.getElementsByTagName("select");
+    var codename = $('input[name="codename"]').val();
     var editor = CodeMirror.fromTextArea(textArea,{
         lineWrapping:true,
         lineNumbers: true,
@@ -67,7 +69,40 @@
         indentWithTabs: true,
         mode: "javascript"
     });
-    editor.getDoc().setValue('\n\n\n\n\n\n\n\n\n\n\n\n');
+
+    function changeText(v){
+        if(v=="python"){
+
+            placeholder = "def "+codename+"(n):"+"\n\n"+"    return"
+           
+            editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
+        }
+        else if(v=="java"){
+
+            placeholder = "public class "+codename+"{\n      public static void main(String[] args){\n    \
+                System.out.println('This is kk');\n    }\n        }"
+           
+            editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
+        }
+        else if(v=="ruby"){
+
+            placeholder = "class Solution\n    def "+codename+"(n)\n\n        return"
+           
+            editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
+        }
+        else if(v=="javascript"){
+
+            placeholder = "module.exports={\n    "+codename+":function([]){\n            return;\n        }\n    }"
+           
+            editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
+        }
+        else{
+            editor.getDoc().setValue('    ')
+        }
+    }
+    
+    
+
     $(function() {
         $('a#submit').on('click', function(e) {
             document.getElementById('loading').style.display='';
