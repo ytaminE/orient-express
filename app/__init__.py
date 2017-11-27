@@ -133,10 +133,13 @@ def run_code():
             InvocationType='RequestResponse',
             LogType='Tail',
             # Payload='{"name":"fizzBuzz","input":[10],"url":"https://s3.amazonaws.com/test-yuanyi/'+path+'"}'
-            Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+            # Payload='{ "input": "[1,2,3,4,5]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
+            Payload='{ "input":'+ '\"'+ str(input) +'\"' + ',"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}'
         )
-        print(
-            '{"input": "[3,4]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+        print ('{ "input":' + '\"' + str(input) + '\"' + ',"name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
+
+        # print(
+            # '{"input": "[3,4]","name": "' + questionName + '","url": "https://s3.amazonaws.com/test-yuanyi/' + s3_url + '"}')
     else:
         return jsonify(result="Please select a correct programming language")
 

@@ -73,26 +73,25 @@
     function changeText(v){
         if(v=="python"){
 
-            placeholder = "def "+codename+"(n):"+"\n\n"+"    return"
+            placeholder = "def "+codename+"(nums):"+"\n\n"+"    return"
            
             editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
         }
         else if(v=="java"){
 
-            placeholder = "public class "+codename+"{\n      public static void main(String[] args){\n    \
-                System.out.println('This is kk');\n    }\n        }"
+            placeholder = "public class Solution"+" {\n    public static void main(String[] args) {\n        System.out.println('This is kk');\n    }\n}"
            
             editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
         }
         else if(v=="ruby"){
 
-            placeholder = "class Solution\n    def "+codename+"(n)\n\n        return"
+            placeholder = "class Solution\n    def "+codename+"(nums)\n\n        return"
            
             editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
         }
         else if(v=="javascript"){
 
-            placeholder = "module.exports={\n    "+codename+":function([]){\n            return;\n        }\n    }"
+            placeholder = "module.exports={\n    "+codename+":function(){\n            return;\n        }\n    }"
            
             editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
         }
