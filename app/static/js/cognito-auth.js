@@ -45,6 +45,8 @@ var WildRydes = window.WildRydes || {};
             });
             var email = userPool.getCurrentUser().getUsername();
             $('#username').val(email);
+            $('#base_username').val(email);
+
         } else {
             resolve(null);
         }

@@ -183,6 +183,12 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/home/<username>', methods=['GET', 'POST'])
+def userHome(username):
+
+    return username
+
+
 @app.route('/problems', methods=['GET', 'POST'])
 def problems():
     table = dynamodb.Table('question')
