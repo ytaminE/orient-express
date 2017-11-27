@@ -91,9 +91,9 @@
     <script src="https://s3.amazonaws.com/zappa-static-files-yuanyi/static/js/code.js"></script>
 
     <script type=text/javascript>
-        $('#left_home').attr('href', '/dev/home/' + $('#base_username').val().replace(/\./g,' '));
-        $('#right_home').attr('href', '/dev/home/' + $('#base_username').val().replace(/\./g,' '));
-    </script> 
+        var url = document.URL
+        $('#left_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));
+        $('#right_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));    </script> 
 
 </body>
 </html>
