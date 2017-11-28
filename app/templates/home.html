@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container" id="home" style="display:none">
-	<h1>Home Page</h1>
+	<h1>Home Page {{ username }}</h1>
     
     <input id="username" type="hidden" name="username" value="null">
     
@@ -16,12 +16,20 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-     
-    </tr>
+    {% if list %}
+        {% for item in list %}
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>
+                <div>
+                    <a href="{{url_for('details', username = username,question_name = item['question_name'])}}">{{ item['question_name'] }}</a>
+                </div>
+            </td>
+            <td >{{ item['post_date_time'] }}</td>
+        </tr>
+        {% endfor %}
+      {% endif %}
+       
    
   </tbody>
 </table>

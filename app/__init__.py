@@ -185,9 +185,13 @@ def home():
 
 @app.route('/home/<username>', methods=['GET', 'POST'])
 def userHome(username):
-
-    return username
-
+    username = username.replace(" ",".")
+    table = dynamodb.Table('user_question')
+    response = table.scan(
+            FilterExpression=Attr('username').contains(username)
+        )
+    
+    return render_template('home.html',list = response['Items'],username = username)
 
 @app.route('/problems', methods=['GET', 'POST'])
 def problems():
@@ -203,6 +207,29 @@ def problems():
 
     return render_template('problems.html', list=response['Items'])
 
+@app.route('/home/<username>/details/<question_name>')
+def details(username,question_name):
+    table = dynamodb.Table('question')
+    response = table.get_item(
+        Key={
+            'question_name': question_name
+        })
+    description = response['Item']['question_content']
+
+    table2 = dynamodb.Table('user_question')
+    response = table2.get_item(
+        Key={
+        'username':username,
+        'question_name':question_name
+        })
+    pre_code = response['Item']['code_s3_url'][37:]
+
+    bucket = s3.Bucket('test-yuanyi')
+    obj = bucket.Object(pre_code)
+    body = obj.get()['Body'].read().decode('ascii')
+
+
+    return render_template('details.html',description = description, body = body)
 
 @app.route('/problems/<question_name>', methods=['GET', 'POST'])
 def problem(question_name):
