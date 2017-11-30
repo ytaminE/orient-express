@@ -113,8 +113,6 @@
             editor.getDoc().setValue('\n\n\n\n\n\n\n')
         }
     }
-    
-    
 
     $(function() {
         $('a#submit').on('click', function(e) {
@@ -128,7 +126,10 @@
             // code: $('textarea[name="code"]').val()
             code: editor.getValue()            
             }, function(data) {
-                $("#result").val(data.result);
+                var result = data.result;
+                result = result.substring(1,result.length-1);
+                result = result.split("\\n").join("\r\n");
+                $("#result").val(result);
                 if($("#result").val()!="") document.getElementById('loading').style.display='none';
             });
             return false;
