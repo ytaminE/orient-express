@@ -200,9 +200,10 @@ def problems():
 
     if request.method=="POST":
         search_content = request.form['search']
-        response = table.scan(
-            FilterExpression=Attr('question_name').contains(search_content)
-        )
+        if search_content!="":
+            response = table.scan(
+                FilterExpression=Attr('question_name').contains(search_content)
+            )
     
 
     return render_template('problems.html', list=response['Items'])
