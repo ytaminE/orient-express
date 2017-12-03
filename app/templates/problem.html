@@ -26,13 +26,13 @@
             </select>
         </div>
         <br>
-        <p>Code</p>
+        <p>Code (Note: Please do not change the template provided.)</p>
         <div class="CodeMirror cm-s-default" style="border: 1px solid #ddd">
             <textarea name="code" id="code" rows="20" cols="100"></textarea>            
         </div>
         <br>
-        <p>Input</p>
-        <textarea class="form-control" name="input" id="input" rows="5" cols="100"></textarea>
+        <p>Input (Please keep the input as an array)</p>
+        <textarea class="form-control" name="input" id="input" rows="5" cols="100" placeholder="[12]"></textarea>
 
         <br>
         <div>
@@ -45,7 +45,7 @@
     <br>
     <div>
         <p>Result:</p>
-        <textarea readonly class="form-control" name="input" id="result" rows="3" cols="100"></textarea>
+        <textarea readonly class="form-control" name="input" id="result" rows="3" cols="100" style="font-size: 24px"></textarea>
     </div>
 
     <br>
@@ -59,6 +59,14 @@
 </script>
 
 <script type=text/javascript>
+    function betterTab(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection("add");
+      } else {
+        cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
+          Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+      }
+    }
     var textArea = document.getElementById('code');
     var lang = document.getElementsByTagName("select");
     var codename = $('input[name="codename"]').val();
@@ -66,9 +74,15 @@
         lineWrapping:true,
         lineNumbers: true,
         smartIndent: true,
-        indentWithTabs: true,
+        tabSize: 4,
+        indentUnit: 4,
+        extraKeys: {
+            "Tab": betterTab
+        },
         mode: "javascript"
     });
+          
+    editor.getDoc().setValue('\n\n\n\n\n\n\n\n\n\n\n')
 
     function changeText(v){
         if(v=="python"){
@@ -91,7 +105,7 @@
         }
         else if(v=="javascript"){
 
-            placeholder = "module.exports={\n    "+codename+":function(){\n            return;\n        }\n    }"
+            placeholder = "module.exports={\n    "+codename+":function(){\n        return;\n    }\n}"
            
             editor.getDoc().setValue(placeholder+'\n\n\n\n\n\n\n')
         }
@@ -99,8 +113,6 @@
             editor.getDoc().setValue('\n\n\n\n\n\n\n')
         }
     }
-    
-    
 
     $(function() {
         $('a#submit').on('click', function(e) {
@@ -114,7 +126,10 @@
             // code: $('textarea[name="code"]').val()
             code: editor.getValue()            
             }, function(data) {
-                $("#result").val(data.result);
+                var result = data.result;
+                result = result.substring(1,result.length-1);
+                result = result.split("\\n").join("\r\n");
+                $("#result").val(result);
                 if($("#result").val()!="") document.getElementById('loading').style.display='none';
             });
             return false;

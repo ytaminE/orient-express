@@ -74,7 +74,7 @@
     {% block content %}{% endblock %}
     <footer style="background-color:black" class="nav-footer">
       <div class="container">
-        <p>© 2017<a style="color:white; text-decoration:none;" href="#">Orient Express</a></p>
+        <p>© 2017 <a style="color:white; text-decoration:none;" href="#">ECE1779 Orient Express</a></p>
       </div>
     </footer>
 
@@ -92,8 +92,11 @@
 
     <script type=text/javascript>
         var url = document.URL
-        $('#left_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));
-        $('#right_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));    </script> 
+        $('#left_home').attr('href', '/dev/home/' + $('#base_username').val().replace(/\./g,' '));
+        $('#right_home').attr('href', '/dev/home/' + $('#base_username').val().replace(/\./g,' '));
+        <!--$('#left_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));-->
+        <!--$('#right_home').attr('href', url.substring(0,url.lastIndexOf("/")) + '/home/' + $('#base_username').val().replace(/\./g,' '));    -->
+    </script> 
 
 </body>
 </html>
