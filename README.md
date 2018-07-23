@@ -9,6 +9,23 @@ source venv/bin/activate
 ./start.sh
 ```
 ## How to deploy
+Please include the instance folder and set up the AWS environment in the format below
+```python
+DEBUG = True # Turns on debugging features in Flask
+BCRYPT_LEVEL = 12 # Configuration for the Flask-Bcrypt extension
+MAIL_FROM_EMAIL = "test@test.com" # For use in application emails
+UPLOAD_FOLDER = '/'
+S3_FOLDER = '/'
+
+SECRET_KEY = ''
+STRIPE_API_KEY = ''
+
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+
+IMAGE_BUCKET_NAME = 'your s3 bucket name'
+```
+
 ```
 zappa deploy
 ```
@@ -105,3 +122,8 @@ public class Solution {
     }
 }
 ```
+
+
+# Screenshot
+![](https://raw.githubusercontent.com/fssq1993/markdown_photos/master/oriental-express/editor.jpg)
+![](https://raw.githubusercontent.com/fssq1993/markdown_photos/master/oriental-express/problemsList.jpg)
